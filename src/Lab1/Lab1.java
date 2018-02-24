@@ -7,9 +7,6 @@ public class Lab1 {
 
     public static void main(String[] args) {
 
-        //int c2 = 0, c3 = 1, c5 = 4, c7 = 4;
-        //char o1 = '+', o2 = '-';
-
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter character n:");
         String n = sc.next();
