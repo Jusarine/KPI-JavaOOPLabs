@@ -12,20 +12,19 @@ public class Lab3 {
     // В заданому тексті знайти підрядок максимальної довжини,
     // що є паліндромом, тобто читається однаково зліва на право та з права на ліво.
 
-    public static void main(String[] args) throws FileNotFoundException {
+    private static StringBuffer res;
+    private static StringBuffer text;
 
-        StringBuffer res = new StringBuffer();
-        StringBuffer text = new StringBuffer();
+    public static void main(String[] args){
 
-        File file = new File("data/palindromes.txt");
+        readFile();
+        findPalindromes(text.toString().split("\\W+"));
+        findMaxPalindrome(res.toString().split("\n"));
 
-        Scanner sc = new Scanner(file);
-        while (sc.hasNext()) {
-            text.append(sc.nextLine());
-            text.append("\n");
-        }
+    }
+    private static void findPalindromes(String[] arr){
+        res = new StringBuffer();
 
-        String[] arr = text.toString().split("\\W+");
         System.out.println("Substrings: " + Arrays.toString(arr));
 
         for (String elem : arr) {
@@ -37,22 +36,26 @@ public class Lab3 {
                         res.append(elem.substring(i - j, i + j + 1));
                         res.append("\n");
                     }
-                    else if (j < (i + 2) && elem.charAt(i - j + 1) == elem.charAt(i + j)) { // type anna
+                    else break;
+                }
+                for (int j = 1; (i + j) < elem.length(); j++) {
+                    if (j < (i + 2) && elem.charAt(i - j + 1) == elem.charAt(i + j)) { // type anna
                         res.append(elem.substring(i - j + 1, i + j + 1));
                         res.append("\n");
                     }
-                    else{
-                        break;
-                    }
+                    else break;
                 }
             }
+
         }
 
-        String[] list = res.toString().split("\n");
-        System.out.println("Palindromes: " + Arrays.toString(list));
+    }
 
-        String max = list[0];
-        for (String aList : list) {
+    private static void findMaxPalindrome(String[] arr){
+        System.out.println("Palindromes: " + Arrays.toString(arr));
+
+        String max = arr[0];
+        for (String aList : arr) {
             if (aList.length() > max.length()) {
                 max = aList;
             }
@@ -60,5 +63,25 @@ public class Lab3 {
 
         System.out.println("Max palindrome: " + max);
 
+    }
+
+    private static void readFile(){
+        text = new StringBuffer();
+
+        File file = new File("data/palindromes.txt");
+
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (sc != null) {
+            while (sc.hasNext()) {
+                text.append(sc.nextLine());
+                text.append("\n");
+            }
+        }
     }
 }
