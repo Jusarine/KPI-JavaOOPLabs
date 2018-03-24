@@ -1,6 +1,6 @@
 package Lab4;
 
-public class Word extends SentenceMember {
+public class Word implements SentenceMember {
     private MyLinkedList<Letter> word;
 
     public Word(){

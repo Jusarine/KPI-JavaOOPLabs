@@ -1,6 +1,6 @@
 package Lab4;
 
-public class Punctuation extends SentenceMember {
+public class Punctuation implements SentenceMember {
     private char punctuation;
 
     public Punctuation(char punctuation){
