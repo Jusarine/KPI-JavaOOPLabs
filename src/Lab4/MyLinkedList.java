@@ -1,4 +1,4 @@
-package Lab4WithMyLinkedList;
+package Lab4;
 
 import java.util.AbstractList;
 

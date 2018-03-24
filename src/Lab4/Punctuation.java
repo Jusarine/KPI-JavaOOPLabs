@@ -1,4 +1,4 @@
-package Lab4WithMyLinkedList;
+package Lab4;
 
 public class Punctuation extends SentenceMember {
     private char punctuation;

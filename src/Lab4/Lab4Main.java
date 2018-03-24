@@ -1,4 +1,4 @@
-package Lab4WithMyLinkedList;
+package Lab4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
