@@ -11,6 +11,13 @@ public class Letter {
         return letter;
     }
 
+    public boolean equalsInLowerCase(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Letter that = (Letter) o;
+        return String.valueOf(letter).toLowerCase().equals(String.valueOf(that.letter).toLowerCase());
+    }
+
     @Override
     public String toString() {
         return String.valueOf(letter);

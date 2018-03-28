@@ -27,7 +27,7 @@ public class Text {
 
             for (String strWord : strWords) {
 
-                strWord = strWord.toLowerCase();
+                //strWord = strWord.toLowerCase();
                 Word word = new Word();
 
                 Punctuation punctuation = null;
@@ -47,7 +47,7 @@ public class Text {
             }
             sentences.add(sentence);
         }
-        System.out.println(text);
+        //System.out.println(text);
     }
 
 
@@ -59,7 +59,7 @@ public class Text {
     public String toString() {
         String s = "";
         for (Sentence sentence : sentences) {
-            s += sentence;
+            s = s + "\n" + sentence;
         }
         return s;
     }

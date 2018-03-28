@@ -13,6 +13,7 @@ public class Lab4Main {
 
         text = new Text(readFile());
         text.parseText();
+        System.out.println(text);
 
         findPalindromes();
         findMaxPalindrome();
@@ -51,16 +52,16 @@ public class Lab4Main {
 
                     for (int i = 1; i < letters.size()-1; i++) {
                         for (int j = 1; (i + j) < letters.size(); j++) {
-                            if (j < (i + 1) && letters.get(i - j).equals(letters.get(i + j))) { // type ana
+                            if (j < (i + 1) && letters.get(i - j).equalsInLowerCase(letters.get(i + j))) { // type ana
                                 Word palindrome = new Word();
-                                palindrome.addLetters(word.toString().substring(i - j, i + j + 1));
+                                palindrome.addLetters(word.toString().substring(i - j, i + j + 1).toLowerCase());
                                 palindromes.add(palindrome);
                             } else break;
                         }
                         for (int j = 1; (i + j) < letters.size(); j++) {
-                            if (j < (i + 2) && letters.get(i - j + 1).equals(letters.get(i + j))) { // type anna
+                            if (j < (i + 2) && letters.get(i - j + 1).equalsInLowerCase(letters.get(i + j))) { // type anna
                                 Word palindrome = new Word();
-                                palindrome.addLetters(word.toString().substring(i - j + 1, i + j + 1));
+                                palindrome.addLetters(word.toString().substring(i - j + 1, i + j + 1).toLowerCase());
                                 palindromes.add(palindrome);
                             } else break;
                         }
