@@ -10,7 +10,7 @@ public class Word implements SentenceMember {
         }
     }
 
-    public MyLinkedList<Letter> getLetterList() {
+    public MyLinkedList<Letter> getLetters() {
         return word;
     }
 

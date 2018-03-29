@@ -12,15 +12,14 @@ public class Lab4Main {
     public static void main(String[] args) {
 
         text = new Text(readFile());
-        text.parseText();
         System.out.println(text);
 
         findPalindromes();
         findMaxPalindrome();
     }
 
-    private static StringBuffer readFile(){
-         StringBuffer sb = new StringBuffer();
+    private static String readFile(){
+         StringBuilder sb = new StringBuilder();
 
         File file = new File("data/sentences.txt");
 
@@ -37,7 +36,7 @@ public class Lab4Main {
                 sb.append("\n");
             }
         }
-        return sb;
+        return sb.toString();
     }
 
     private static void findPalindromes(){
@@ -47,7 +46,7 @@ public class Lab4Main {
 
                 if (sentenceMember instanceof Word){
                     Word word = (Word) sentenceMember;
-                    MyLinkedList<Letter> letters = word.getLetterList();
+                    MyLinkedList<Letter> letters = word.getLetters();
 
                     for (int i = 1; i < letters.size()-1; i++) {
                         for (int j = 1; (i + j) < letters.size(); j++) {

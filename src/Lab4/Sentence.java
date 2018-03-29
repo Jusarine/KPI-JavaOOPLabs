@@ -3,17 +3,16 @@ package Lab4;
 public class Sentence {
     private MyLinkedList<SentenceMember> sentenceMembers;
 
-
-    public Sentence(){
+    public Sentence(String sentence){
         sentenceMembers = new MyLinkedList<>();
-    }
-    public void addWord(String word){
-        sentenceMembers.add(new Word(word));
 
-    }
-
-    public void addPunctuation(char punctuation){
-        sentenceMembers.add(new Punctuation(punctuation));
+        for (String strSentenceMember : sentence.split("\\s|(?<=,)|(?=,)")) {
+            if (strSentenceMember.equals(",")){
+                sentenceMembers.add(new Punctuation(strSentenceMember.charAt(0)));
+            } else {
+                sentenceMembers.add(new Word(strSentenceMember));
+            }
+        }
     }
 
     public MyLinkedList<SentenceMember> getSentenceMembers() {
@@ -26,7 +25,7 @@ public class Sentence {
         for (SentenceMember sentenceMember: sentenceMembers) {
             s += sentenceMember + " ";
         }
-        s = s.replaceAll("\\s\\.",  ".").replaceAll("\\s,", ",").replaceAll("\\s!", "!").replaceAll("\\s\\?", "?");
+        s = s.replaceAll("\\s,", ",");
         return s;
     }
 }

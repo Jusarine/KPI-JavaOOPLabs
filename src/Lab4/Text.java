@@ -2,29 +2,13 @@ package Lab4;
 
 public class Text {
     private MyLinkedList<Sentence> sentences;
-    private StringBuffer text;
 
-    public Text(StringBuffer text){
-        this.text = text;
+    public Text(String text){
         sentences = new MyLinkedList<>();
-    }
 
-    public void parseText() {
-
-        Sentence sentence = new Sentence();
-        for (String strSentenceMember : text.toString().split("\\s|(?=[,.!?])|(?<=[,.!?])")) {
-
-            if (strSentenceMember.equals(".") || strSentenceMember.equals("!") || strSentenceMember.equals("?")) {
-                sentence.addPunctuation(strSentenceMember.charAt(0));
-                sentences.add(sentence);
-                sentence = new Sentence();
-
-            } else if (strSentenceMember.equals(",")){
-                sentence.addPunctuation(strSentenceMember.charAt(0));
-
-            } else {
-                sentence.addWord(strSentenceMember);
-            }
+        for (String strSentence : text.split("(?<=[.!?])\\s*")) {
+            Sentence sentence = new Sentence(strSentence);
+            sentences.add(sentence);
         }
     }
 

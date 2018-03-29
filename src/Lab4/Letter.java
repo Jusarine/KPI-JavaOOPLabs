@@ -7,11 +7,8 @@ public class Letter {
         this.letter = letter;
     }
 
-    public boolean equalsIgnoreCase(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Letter that = (Letter) o;
-        return String.valueOf(letter).toLowerCase().equals(String.valueOf(that.letter).toLowerCase());
+    public boolean equalsIgnoreCase(Letter letter) {
+        return String.valueOf(this.letter).toLowerCase().equals(String.valueOf(letter).toLowerCase());
     }
 
     @Override
