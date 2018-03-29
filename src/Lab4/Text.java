@@ -1,8 +1,5 @@
 package Lab4;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Text {
     private MyLinkedList<Sentence> sentences;
     private StringBuffer text;
@@ -12,44 +9,24 @@ public class Text {
         sentences = new MyLinkedList<>();
     }
 
+    public void parseText() {
 
-    public void parseText(){
+        Sentence sentence = new Sentence();
+        for (String strSentenceMember : text.toString().split("\\s|(?=[,.!?])|(?<=[,.!?])")) {
 
-        String pattern = "[^.!?]+[.!?]";
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(text.toString());
+            if (strSentenceMember.equals(".") || strSentenceMember.equals("!") || strSentenceMember.equals("?")) {
+                sentence.addPunctuation(strSentenceMember.charAt(0));
+                sentences.add(sentence);
+                sentence = new Sentence();
 
-        while(m.find()) {
-            String strSentence = text.toString().substring(m.start(), m.end()).trim();
-            String[] strWords = strSentence.split("\\s");
+            } else if (strSentenceMember.equals(",")){
+                sentence.addPunctuation(strSentenceMember.charAt(0));
 
-            Sentence sentence = new Sentence();
-
-            for (String strWord : strWords) {
-
-                //strWord = strWord.toLowerCase();
-                Word word = new Word();
-
-                Punctuation punctuation = null;
-                for (char strCharacter : strWord.toCharArray()) {
-                    if(strCharacter == '.' || strCharacter == '!' || strCharacter == '?' || strCharacter == ',') {
-                        punctuation = new Punctuation(strCharacter);
-                    }
-                    else {
-                        word.addLetter(strCharacter);
-                    }
-                }
-                sentence.addWord(word);
-
-                if(punctuation != null){
-                    sentence.addPunctuation(punctuation);
-                }
+            } else {
+                sentence.addWord(strSentenceMember);
             }
-            sentences.add(sentence);
         }
-        //System.out.println(text);
     }
-
 
     public MyLinkedList<Sentence> getSentences() {
         return sentences;

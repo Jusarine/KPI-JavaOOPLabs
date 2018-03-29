@@ -7,13 +7,13 @@ public class Sentence {
     public Sentence(){
         sentenceMembers = new MyLinkedList<>();
     }
-    public void addWord(Word word){
-        sentenceMembers.add(word);
+    public void addWord(String word){
+        sentenceMembers.add(new Word(word));
 
     }
 
-    public void addPunctuation(Punctuation punctuation){
-        sentenceMembers.add(punctuation);
+    public void addPunctuation(char punctuation){
+        sentenceMembers.add(new Punctuation(punctuation));
     }
 
     public MyLinkedList<SentenceMember> getSentenceMembers() {

@@ -3,22 +3,14 @@ package Lab4;
 public class Word implements SentenceMember {
     private MyLinkedList<Letter> word;
 
-    public Word(){
+    public Word(String letters){
         word = new MyLinkedList<>();
-    }
-
-     public void addLetter(char character){
-        Letter letter = new Letter(character);
-        word.add(letter);
-     }
-
-     public void addLetters(String s){
-        for(char c: s.toCharArray()){
+        for(char c: letters.toCharArray()){
             word.add(new Letter(c));
         }
-     }
+    }
 
-    public MyLinkedList<Letter> getWord() {
+    public MyLinkedList<Letter> getLetterList() {
         return word;
     }
 

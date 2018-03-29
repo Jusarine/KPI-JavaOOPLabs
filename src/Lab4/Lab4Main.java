@@ -17,7 +17,6 @@ public class Lab4Main {
 
         findPalindromes();
         findMaxPalindrome();
-
     }
 
     private static StringBuffer readFile(){
@@ -48,20 +47,18 @@ public class Lab4Main {
 
                 if (sentenceMember instanceof Word){
                     Word word = (Word) sentenceMember;
-                    MyLinkedList<Letter> letters = word.getWord();
+                    MyLinkedList<Letter> letters = word.getLetterList();
 
                     for (int i = 1; i < letters.size()-1; i++) {
                         for (int j = 1; (i + j) < letters.size(); j++) {
-                            if (j < (i + 1) && letters.get(i - j).equalsInLowerCase(letters.get(i + j))) { // type ana
-                                Word palindrome = new Word();
-                                palindrome.addLetters(word.toString().substring(i - j, i + j + 1).toLowerCase());
+                            if (j < (i + 1) && letters.get(i - j).equalsIgnoreCase(letters.get(i + j))) { // type ana
+                                Word palindrome = new Word(word.toString().substring(i - j, i + j + 1).toLowerCase());
                                 palindromes.add(palindrome);
                             } else break;
                         }
                         for (int j = 1; (i + j) < letters.size(); j++) {
-                            if (j < (i + 2) && letters.get(i - j + 1).equalsInLowerCase(letters.get(i + j))) { // type anna
-                                Word palindrome = new Word();
-                                palindrome.addLetters(word.toString().substring(i - j + 1, i + j + 1).toLowerCase());
+                            if (j < (i + 2) && letters.get(i - j + 1).equalsIgnoreCase(letters.get(i + j))) { // type anna
+                                Word palindrome = new Word(word.toString().substring(i - j + 1, i + j + 1).toLowerCase());
                                 palindromes.add(palindrome);
                             } else break;
                         }

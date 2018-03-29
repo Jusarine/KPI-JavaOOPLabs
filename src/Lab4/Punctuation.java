@@ -7,10 +7,6 @@ public class Punctuation implements SentenceMember {
         this.punctuation = punctuation;
     }
 
-    public char getPunctuation() {
-        return punctuation;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
