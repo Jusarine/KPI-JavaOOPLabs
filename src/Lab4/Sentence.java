@@ -6,8 +6,11 @@ public class Sentence {
     public Sentence(String sentence){
         sentenceMembers = new MyLinkedList<>();
 
-        for (String strSentenceMember : sentence.split("\\s|(?<=,)|(?=,)")) {
-            if (strSentenceMember.equals(",")){
+        for (String strSentenceMember : sentence.split("\\s|(?<=[,.!?])|(?=[,.!?])")) {
+            if (strSentenceMember.equals(".") || strSentenceMember.equals("!") || strSentenceMember.equals("?")){
+                sentenceMembers.add(new Punctuation(strSentenceMember.charAt(0)));
+            }
+            else if (strSentenceMember.equals(",")){
                 sentenceMembers.add(new Punctuation(strSentenceMember.charAt(0)));
             } else {
                 sentenceMembers.add(new Word(strSentenceMember));
@@ -25,7 +28,7 @@ public class Sentence {
         for (SentenceMember sentenceMember: sentenceMembers) {
             s += sentenceMember + " ";
         }
-        s = s.replaceAll("\\s,", ",");
+        s = s.replaceAll("\\s\\.",  ".").replaceAll("\\s,", ",").replaceAll("\\s!", "!").replaceAll("\\s\\?", "?");
         return s;
     }
 }

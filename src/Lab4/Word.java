@@ -3,9 +3,9 @@ package Lab4;
 public class Word implements SentenceMember {
     private MyLinkedList<Letter> word;
 
-    public Word(String letters){
+    public Word(String letters) {
         word = new MyLinkedList<>();
-        for(char c: letters.toCharArray()){
+        for (char c : letters.toCharArray()) {
             word.add(new Letter(c));
         }
     }
@@ -14,7 +14,7 @@ public class Word implements SentenceMember {
         return word;
     }
 
-    public int length(){
+    public int length() {
         return word.size();
     }
 
