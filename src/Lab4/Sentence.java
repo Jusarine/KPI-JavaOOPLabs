@@ -2,15 +2,13 @@ package Lab4;
 
 public class Sentence {
     private MyLinkedList<SentenceMember> sentenceMembers;
+    private static final String punctuationSymbols = ".,!?";
 
     public Sentence(String sentence){
         sentenceMembers = new MyLinkedList<>();
 
         for (String strSentenceMember : sentence.split("\\s|(?<=[,.!?])|(?=[,.!?])")) {
-            if (strSentenceMember.equals(".") || strSentenceMember.equals("!") || strSentenceMember.equals("?")){
-                sentenceMembers.add(new Punctuation(strSentenceMember.charAt(0)));
-            }
-            else if (strSentenceMember.equals(",")){
+            if (punctuationSymbols.contains(strSentenceMember)){
                 sentenceMembers.add(new Punctuation(strSentenceMember.charAt(0)));
             } else {
                 sentenceMembers.add(new Word(strSentenceMember));
