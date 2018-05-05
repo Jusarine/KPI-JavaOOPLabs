@@ -1,21 +1,55 @@
 package Lab6;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyList<E> implements List<E> {
-    LLNode<E> head;
-    LLNode<E> tail;
+
+    /**
+     * Pointer to first node.
+     */
+    private LLNode<E> head;
+
+    /**
+     * Pointer to last node.
+     */
+    private LLNode<E> tail;
+
+    /**
+     * The size of this list.
+     */
     private int size;
 
+    /**
+     * Constructs an empty list.
+     */
     public MyList() {
         size = 0;
         head = new LLNode<>(null);
         tail = new LLNode<>(null);
         head.next = tail;
         tail.prev = head;
+    }
+
+    /**
+     * Constructs a list containing the element.
+     *
+     * @param  e the element to be appended to this list
+     */
+    public MyList(E e){
+        this();
+        add(e);
+    }
+
+    /**
+     * Constructs a list containing the elements of the specified
+     * collection, in the order they are returned by the collection's
+     * iterator.
+     *
+     * @param  c the collection whose elements are to be placed into this list
+     */
+    public MyList(Collection<? extends E> c){
+        this();
+        addAll(c);
     }
 
     @Override
@@ -36,18 +70,20 @@ public class MyList<E> implements List<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
-            int i = 0;
+            int nextIndex = 0;
+            LLNode<E> lastReturned = head;
 
             @Override
             public boolean hasNext() {
-                return i < size;
+                return nextIndex < size;
             }
 
             @Override
             public E next() {
-                if (!hasNext()) return null;
-                i++;
-                return get(i - 1);
+                if (!hasNext()) throw new NoSuchElementException();
+                nextIndex++;
+                lastReturned = lastReturned.next;
+                return lastReturned.data;
             }
         };
     }
@@ -64,8 +100,10 @@ public class MyList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
-        if (a.length < size) a = (T[]) new Object[size];
+        if (a.length < size)
+            a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
 
         LLNode curr = head.next;
         for (int i = 0; i < size; i++) {
@@ -88,11 +126,9 @@ public class MyList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        LLNode<E> elem = new LLNode<>((E) o);
         LLNode<E> curr = head.next;
-
         for (int i = 0; i < size; i++){
-            if (curr.data == elem.data){
+            if (curr.data.equals(o)){
                 curr.prev.next = curr.next;
                 curr.next.prev = curr.prev;
                 size--;
@@ -121,6 +157,7 @@ public class MyList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
         for (E elem: c){
             add(index, elem);
             index++;
@@ -162,17 +199,21 @@ public class MyList<E> implements List<E> {
 
     @Override
     public E get(int index) {
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         return getNode(index).data;
     }
 
     @Override
     public E set(int index, E element) {
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         getNode(index).data = element;
         return element;
     }
 
     @Override
     public void add(int index, E element) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+
         LLNode<E> curr = getNode(index);
         LLNode<E> elem = new LLNode<>(element);
 
@@ -185,6 +226,7 @@ public class MyList<E> implements List<E> {
 
     @Override
     public E remove(int index) {
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         LLNode<E> curr = getNode(index);
         curr.prev.next = curr.next;
         curr.next.prev = curr.prev;
@@ -196,11 +238,11 @@ public class MyList<E> implements List<E> {
     @Override
     public int indexOf(Object o) {
         LLNode<E> curr = head.next;
-        LLNode<E> elem = new LLNode<>((E) o);
         for (int i = 0; i < size; i++){
-            if (elem.data == curr.data){
+            if (curr.data.equals(o)){
                 return i;
             }
+            curr = curr.next;
         }
         return -1;
     }
@@ -209,9 +251,8 @@ public class MyList<E> implements List<E> {
     public int lastIndexOf(Object o) {
         int idx = -1;
         LLNode<E> curr = head.next;
-        LLNode<E> elem = new LLNode<>((E) o);
         for (int i = 0; i < size; i++){
-            if (elem.data == curr.data){
+            if (curr.data.equals(o)){
                 idx = i;
             }
         }
@@ -221,55 +262,57 @@ public class MyList<E> implements List<E> {
     @Override
     public ListIterator<E> listIterator() {
         return new ListIterator<>() {
-            int i = 0;
+            int nextIndex = 0;
+            LLNode<E> lastReturned = head;
 
             @Override
             public boolean hasNext() {
-                return i < size;
+                return nextIndex < size;
             }
 
             @Override
             public E next() {
-                if (!hasNext()) return null;
-                i++;
-                return get(i - 1);
+                if (!hasNext()) throw new NoSuchElementException();
+                nextIndex++;
+                lastReturned = lastReturned.next;
+                return lastReturned.data;
             }
 
             @Override
             public boolean hasPrevious() {
-                return i != 0;
+                return nextIndex != 0;
             }
 
             @Override
             public E previous() {
-                if (!hasPrevious()) return null;
-                i--;
-                return get(i - 1);
-
+                if (!hasPrevious()) throw new NoSuchElementException();
+                nextIndex--;
+                lastReturned = lastReturned.prev;
+                return lastReturned.data;
             }
 
             @Override
             public int nextIndex() {
-                return i + 1;
+                return nextIndex;
             }
 
             @Override
             public int previousIndex() {
-                return i - 1;
+                return nextIndex - 1;
             }
 
             @Override
             public void remove() {
-                LLNode<E> elem = getNode(i);
-                elem.prev.next = elem.next;
-                elem.next.prev = elem.prev;
+                if (lastReturned == null) throw new IllegalStateException();
+                lastReturned.prev.next = lastReturned.next;
+                lastReturned.next.prev = lastReturned.prev;
                 size--;
             }
 
             @Override
             public void set(E e) {
-                LLNode<E> elem = getNode(i);
-                elem.data = e;
+                if (lastReturned == null) throw new IllegalStateException();
+                lastReturned.data = e;
             }
 
             @Override
@@ -286,57 +329,60 @@ public class MyList<E> implements List<E> {
 
     @Override
     public ListIterator<E> listIterator(int index) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
 
         return new ListIterator<>() {
-            int i = index;
+            int nextIndex = index;
+            LLNode<E> lastReturned = getNode(index - 1);
 
             @Override
             public boolean hasNext() {
-                return i < size;
+                return nextIndex < size;
             }
 
             @Override
             public E next() {
-                if (!hasNext()) return null;
-                i++;
-                return get(i - 1);
+                if (!hasNext()) throw new NoSuchElementException();
+                nextIndex++;
+                lastReturned = lastReturned.next;
+                return lastReturned.data;
             }
 
             @Override
             public boolean hasPrevious() {
-                return i != 0;
+                return nextIndex != 0;
             }
 
             @Override
             public E previous() {
-                if (!hasPrevious()) return null;
-                i--;
-                return get(i - 1);
-
+                if (!hasPrevious()) throw new NoSuchElementException();
+                nextIndex--;
+                lastReturned = lastReturned.prev;
+                return lastReturned.data;
             }
 
             @Override
             public int nextIndex() {
-                return i + 1;
+                return nextIndex;
             }
 
             @Override
             public int previousIndex() {
-                return i - 1;
+                return nextIndex - 1;
             }
 
             @Override
             public void remove() {
-                LLNode<E> elem = getNode(i);
-                elem.prev.next = elem.next;
-                elem.next.prev = elem.prev;
+                if (lastReturned == null) throw new IllegalStateException();
+                lastReturned.prev.next = lastReturned.next;
+                lastReturned.next.prev = lastReturned.prev;
                 size--;
             }
 
             @Override
             public void set(E e) {
-                LLNode<E> elem = getNode(i);
-                elem.data = e;
+                if (lastReturned == null) throw new IllegalStateException();
+                lastReturned.data = e;
             }
 
             @Override
@@ -353,6 +399,8 @@ public class MyList<E> implements List<E> {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
+        if (fromIndex < 0 || toIndex > size || fromIndex > toIndex) throw new IndexOutOfBoundsException();
+
         LLNode<E> curr = getNode(fromIndex);
         List<E> list = new MyList<>();
         list.add(curr.data);
@@ -363,7 +411,14 @@ public class MyList<E> implements List<E> {
         return list;
     }
 
+    /**
+     * Returns the node at the specified position in this list.
+     *
+     * @param index of the node to return
+     * @return the node at the specified position in this list
+     */
     private LLNode<E> getNode(int index){
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
         LLNode<E> curr = head.next;
         for (int i = 0; i < index; i++){
             curr = curr.next;
