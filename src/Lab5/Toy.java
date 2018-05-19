@@ -1,5 +1,8 @@
 package Lab5;
 
+import Lab7.WrongMinAgeException;
+import Lab7.WrongPrizeException;
+
 import java.util.Random;
 
 public class Toy {
@@ -11,9 +14,13 @@ public class Toy {
     public Color color;
     private Random random = new Random();
 
-    public Toy(int minAge, float prize, Size size, Color color) {
-        this.minAge = minAge;
-        this.prize = prize;
+    public Toy(int minAge, float prize, Size size, Color color) throws WrongMinAgeException, WrongPrizeException {
+        if (minAge < 0 || minAge > 18) throw new WrongMinAgeException(minAge);
+        else this.minAge = minAge;
+
+        if (prize < 0) throw new WrongPrizeException(prize);
+        else this.prize = prize;
+
         this.size = size;
         this.color = color;
     }

@@ -1,5 +1,8 @@
 package Lab5;
 
+import Lab7.WrongMinAgeException;
+import Lab7.WrongPrizeException;
+
 public class Car extends Toy{
 
     /** number of wheels */
@@ -9,8 +12,8 @@ public class Car extends Toy{
 
     }
 
-    public Car(int maxAge, float prize, Size size, Color color) {
-        super(maxAge, prize, size, color);
+    public Car(int minAge, float prize, Size size, Color color) throws WrongMinAgeException, WrongPrizeException {
+        super(minAge, prize, size, color);
     }
 
     public void ride(){

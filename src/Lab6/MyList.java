@@ -250,11 +250,13 @@ public class MyList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         int idx = -1;
-        LLNode<E> curr = head.next;
-        for (int i = 0; i < size; i++){
+        LLNode<E> curr = tail.prev;
+        for (int i = size-1; i >= 0; i--){
             if (curr.data.equals(o)){
                 idx = i;
+                break;
             }
+            curr = curr.prev;
         }
         return idx;
     }
