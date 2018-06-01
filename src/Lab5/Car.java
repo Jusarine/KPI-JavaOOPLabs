@@ -3,10 +3,10 @@ package Lab5;
 import Lab7.WrongMinAgeException;
 import Lab7.WrongPrizeException;
 
-public class Car extends Toy{
+public class Car extends Toy {
 
     /** number of wheels */
-    private int wheelsCount;
+    private int wheelsCount = 4;
 
     public Car(){
 

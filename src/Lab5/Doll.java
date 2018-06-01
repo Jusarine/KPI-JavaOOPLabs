@@ -3,9 +3,9 @@ package Lab5;
 import Lab7.WrongMinAgeException;
 import Lab7.WrongPrizeException;
 
-public class Doll extends Toy{
+public class Doll extends Toy {
 
-    private String name;
+    private String name = "Unknown";
 
     public Doll(){
 

@@ -1,8 +1,9 @@
 package Lab6;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class MyList<E> implements List<E> {
+public class MyList<E> implements List<E>, Serializable {
 
     /**
      * Pointer to first node.
@@ -429,7 +430,7 @@ public class MyList<E> implements List<E> {
     }
 }
 
-class LLNode<E>{
+class LLNode<E> implements Serializable{
     LLNode<E> prev;
     LLNode<E> next;
     E data;

@@ -2,10 +2,13 @@ package Lab5;
 
 import Lab7.WrongMinAgeException;
 import Lab7.WrongPrizeException;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Toy {
+@JsonAutoDetect
+public class Toy implements Serializable{
     /** child's minimum age allowed */
     public int minAge;
     /** USDs */
